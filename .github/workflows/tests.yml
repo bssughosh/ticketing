@@ -6,6 +6,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service: [auth, orders, payments, tickets]
     steps:
       - uses: actions/checkout@v3
-      - run: cd auth && npm install && npm run test:ci
+      - name: Tests for ${{matrix.service}}
+        run: cd ${{matrix.service}} && npm install && npm run test:ci
